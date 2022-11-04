@@ -36,7 +36,7 @@ void RenderEngine::Start(const char* title, unsigned int width, unsigned int hei
 	// ---------------------------------------
 	if (!fullscreen) {
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowPos(window, mode->width / 4, mode->height / 4);
+		glfwSetWindowPos(window, 0, 0);
 	}
 
 	// set opengl context

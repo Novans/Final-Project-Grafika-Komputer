@@ -12,9 +12,13 @@ void Demo::Init() {
 	// ------------------------------------
 	shaderProgram = BuildShader("vertexShader.vert", "fragmentShader.frag", nullptr);
 
-	//BuildLukisanDepan();
+	BuildLukisanADepan();
 
-	//BuildLukisanBingkai();
+	BuildLukisanBDepan();
+
+	BuildLukisanCDepan();
+
+	BuildLukisanBingkai();
 
 	BuildPilar();
 
@@ -22,11 +26,23 @@ void Demo::Init() {
 
 	BuildDindingB();
 
+	BuildDindingC();
+
+	BuildDindingKananA();
+
+	BuildDindingKananB();
+
+	BuildDindingKananC();
+
 	BuildPapanTulis();
 
-	BuildPapanTulisBorderVertical();
+	BuildPapanTulisBorder();
 
-	BuildPapanTulisBorderHorizontal();
+	BuildPintuBingkai();
+
+	BuildLantai();
+
+	BuildPintu();
 
 	InitCamera();
 }
@@ -143,13 +159,33 @@ void Demo::Render() {
 	GLint viewLoc = glGetUniformLocation(this->shaderProgram, "view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 
-	//DrawLukisanDepan();
+	DrawLukisanADepan();
 
-	//DrawLukisanBingkai();
+	DrawLukisanBDepan();
+
+	DrawLukisanCDepan();
+
+	DrawLukisanABingkai();
+
+	DrawLukisanBBingkai();
+
+	DrawLukisanCBingkai();
 
 	DrawPilarDepanKiri();
 
 	DrawPilarDepanKanan();
+
+	DrawPilarKiriDepan();
+
+	DrawPilarKiriBelakang();
+
+	DrawPilarKananDepan();
+
+	DrawPilarKananBelakang();
+
+	DrawPilarBelakangKiri();
+
+	DrawPilarBelakangKanan();
 
 	DrawDindingKiriPapan();
 	
@@ -159,18 +195,26 @@ void Demo::Render() {
 
 	DrawPapanTulis();
 
-	DrawPapanTulisBorderKiri();
+	DrawPapanTulisBorder();
 
-	DrawPapanTulisBorderKanan();
+	DrawPintuBingkai();
 
-	DrawPapanTulisBorderAtas();
+	DrawDindingKiri();
 
-	DrawPapanTulisBorderBawah();
+	DrawDindingKananA();
+
+	DrawDindingKananB();
+
+	DrawDindingKananC();
+
+	DrawLantai();
+
+	DrawPintu();
 
 	glDisable(GL_DEPTH_TEST);
 }
 
-void Demo::BuildLukisanDepan() {
+void Demo::BuildLukisanADepan() {
 	// load image into texture memory
 	// ------------------------------
 	// Load and create a texture 
@@ -179,7 +223,7 @@ void Demo::BuildLukisanDepan() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height;
-	unsigned char* image = SOIL_load_image("lukisanDepan.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	unsigned char* image = SOIL_load_image("lukisanADepan.png", &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -188,11 +232,10 @@ void Demo::BuildLukisanDepan() {
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// format position, tex coords
-		// bottom
-		-0.5, -1, 0.2, 0, 0,  // 0
-		 0.5, -1, 0.2, 1, 0,  // 1
-		-0.5,  1, 0.2, 0, 1,  // 2
-		 0.5,  1, 0.2, 1, 1,  // 3
+		-1, 0, 0.2, 0, 0,  // 0
+		 1, 0, 0.2, 1, 0,  // 1
+		-1, 3, 0.2, 0, 1,  // 2
+		 1, 3, 0.2, 1, 1,  // 3
 		
 	};
 
@@ -232,7 +275,7 @@ void Demo::BuildLukisanDepan() {
 
 }
 
-void Demo::DrawLukisanDepan()
+void Demo::DrawLukisanADepan()
 {
 	glUseProgram(shaderProgram);
 
@@ -245,11 +288,11 @@ void Demo::DrawLukisanDepan()
 
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(-5, 0, 0));
+	model = glm::translate(model, glm::vec3(-8.5, 1, 8));
 
-	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
 
-	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -269,7 +312,7 @@ void Demo::BuildLukisanBingkai() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height;
-	unsigned char* image = SOIL_load_image("lukisanBingkai.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	unsigned char* image = SOIL_load_image("lukisanABingkai.png", &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -279,28 +322,28 @@ void Demo::BuildLukisanBingkai() {
 	float vertices[] = {
 		// format position, tex coords
 		// left
-		-0.5, -1,   0, 0, 0,  // 0
-		-0.5, -1, 0.2, 1, 0,  // 1
-		-0.5,  1,   0, 0, 1,  // 2
-		-0.5,  1, 0.2, 1, 1,  // 3
+		-1, 0,   0, 0, 0,  // 0
+		-1, 0, 0.2, 1, 0,  // 1
+		-1, 3,   0, 0, 1,  // 2
+		-1, 3, 0.2, 1, 1,  // 3
 
 		// right
-		0.5, -1,   0, 0, 0,  // 4
-		0.5, -1, 0.2, 1, 0,  // 5
-		0.5,  1,   0, 0, 1,  // 6
-		0.5,  1, 0.2, 1, 1,  // 7
+		1, 0,   0, 0, 0,  // 4
+		1, 0, 0.2, 1, 0,  // 5
+		1, 3,   0, 0, 1,  // 6
+		1, 3, 0.2, 1, 1,  // 7
 
 		// top
-		-0.5, 1, 0.2, 0, 0,  // 8
-		 0.5, 1, 0.2, 1, 0,  // 9
-		-0.5, 1,   0, 0, 1,  // 10
-		 0.5, 1,   0, 1, 1,  // 11
+		-1, 3, 0.2, 0, 0,  // 8
+		 1, 3, 0.2, 1, 0,  // 9
+		-1, 3,   0, 0, 1,  // 10
+		 1, 3,   0, 1, 1,  // 11
 
 		// bottom
-		-0.5, -1, 0.2, 0, 0,  // 12
-		 0.5, -1, 0.2, 1, 0,  // 13
-		-0.5, -1,   0, 0, 1,  // 14
-		 0.5, -1,   0, 1, 1,  // 15
+		-1, 0, 0.2, 0, 0,  // 12
+		 1, 0, 0.2, 1, 0,  // 13
+		-1, 0,   0, 0, 1,  // 14
+		 1, 0,   0, 1, 1,  // 15
 
 	};
 
@@ -343,7 +386,7 @@ void Demo::BuildLukisanBingkai() {
 
 }
 
-void Demo::DrawLukisanBingkai()
+void Demo::DrawLukisanABingkai()
 {
 	glUseProgram(shaderProgram);
 
@@ -354,11 +397,63 @@ void Demo::DrawLukisanBingkai()
 	glBindVertexArray(VAO2); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(-5, 0, 0));
+	model = glm::translate(model, glm::vec3(-8.5, 1, 8));
 
-	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
 
-	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawLukisanBBingkai()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO2); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8.5, 1, 16));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawLukisanCBingkai()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO2); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8.5, 1, 24));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -442,11 +537,11 @@ void Demo::DrawPilarDepanKiri()
 	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(-8, 0, 0));
+	model = glm::translate(model, glm::vec3(-7.5, 0, 0.5));
 
-	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
 
-	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -468,11 +563,167 @@ void Demo::DrawPilarDepanKanan()
 	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(8, 0, 0));
+	model = glm::translate(model, glm::vec3(7.5, 0, 0.5));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	//model = glm::scale(model, glm::vec3(3, 3, 3));
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarKiriDepan()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8, 0, 1));
 
 	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
 
 	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarKiriBelakang()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8, 0, 30));
+
+	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+
+	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarKananDepan()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(8, 0, 1));
+
+	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+
+	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarKananBelakang()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(8, 0, 30));
+
+	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+
+	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarBelakangKiri()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-7.5, 0, 30.5));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::DrawPilarBelakangKanan()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO3); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(7.5, 0, 30.5));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	//model = glm::scale(model, glm::vec3(3, 3, 3));
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -773,7 +1024,7 @@ void Demo::DrawPapanTulis()
 	glBindVertexArray(0);
 }
 
-void Demo::BuildPapanTulisBorderVertical() {
+void Demo::BuildPapanTulisBorder() {
 	// load image into texture memory
 	// ------------------------------
 	// Load and create a texture 
@@ -791,15 +1042,37 @@ void Demo::BuildPapanTulisBorderVertical() {
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// format position, tex coords
-		0, 0,   0, 0, 0,  // 0
-		0, 0, 0.3, 1, 0,  // 1
-		0, 3,   0, 0, 1,  // 2
-		0, 3, 0.3, 1, 1,  // 3
+		// left
+		-2.5, 0,   0, 0, 0,  // 0
+		-2.5, 0, 0.3, 1, 0,  // 1
+		-2.5, 3,   0, 0, 1,  // 2
+		-2.5, 3, 0.3, 1, 1,  // 3
+
+		// right
+		2.5, 0,   0, 0, 0,  // 4
+		2.5, 0, 0.3, 1, 0,  // 5
+		2.5, 3,   0, 0, 1,  // 6
+		2.5, 3, 0.3, 1, 1,  // 7
+
+		//bottom
+		-2.5, 0, 0.3, 0, 0,  // 8
+		 2.5, 0, 0.3, 1, 0,  // 9
+		-2.5, 0,   0, 0, 1,  // 10
+		 2.5, 0,   0, 1, 1,  // 11
+
+		//top
+		-2.5, 3, 0.3, 0, 0,  // 12
+		 2.5, 3, 0.3, 1, 0,  // 13
+		-2.5, 3,   0, 0, 1,  // 14
+		 2.5, 3,   0, 1, 1,  // 15
 
 	};
 
 	unsigned int indices[] = {
-		 0,  1,  3,  0,  2,  3,   // left
+		  0,  1,  3,  0,  2,  3,   // left
+		  4,  5,  7,  4,  6,  7,   // right
+		  8,  9, 11,  8, 10, 11,   // bottom
+		 12, 13, 15, 12, 14, 15,   // top
 	};
 
 	glGenVertexArrays(1, &VAO7);
@@ -834,7 +1107,33 @@ void Demo::BuildPapanTulisBorderVertical() {
 
 }
 
-void Demo::BuildPapanTulisBorderHorizontal() {
+void Demo::DrawPapanTulisBorder()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture7);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO7); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	/*model = glm::translate(model, glm::vec3(-2.5, 1, 0));*/
+
+	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+
+	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildPintuBingkai() {
 	// load image into texture memory
 	// ------------------------------
 	// Load and create a texture 
@@ -843,7 +1142,7 @@ void Demo::BuildPapanTulisBorderHorizontal() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int width, height;
-	unsigned char* image = SOIL_load_image("papanBorder.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	unsigned char* image = SOIL_load_image("pintuBorder.png", &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -852,15 +1151,29 @@ void Demo::BuildPapanTulisBorderHorizontal() {
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// format position, tex coords
-		-2.5, 0, 0.3, 0, 0,  // 0
-		 2.5, 0, 0.3, 1, 0,  // 1
-		-2.5, 0,   0, 0, 1,  // 2
-		 2.5, 0,   0, 1, 1,  // 3
+		// left
+		-1, 0,   0, 0, 0,  // 0
+		-1, 0, 0.1, 1, 0,  // 1
+		-1, 4,   0, 0, 1,  // 2
+		-1, 4, 0.1, 1, 1,  // 3
 
+		// right
+		1, 0,   0, 0, 0,  // 4
+		1, 0, 0.1, 1, 0,  // 5
+		1, 4,   0, 0, 1,  // 6
+		1, 4, 0.1, 1, 1,  // 7
+
+		// top
+		-1, 4, 0.1, 0, 0,  // 8
+		 1, 4, 0.1, 1, 0,  // 9
+		-1, 4,   0, 0, 1,  // 10
+		 1, 4,   0, 1, 1,  // 11
 	};
 
 	unsigned int indices[] = {
-		 0,  1,  3,  0,  2,  3,   // left
+		  0,  1,  3,  0,  2,  3,   // left
+		  4,  5,  7,  4,  6,  7,   // right
+		  8,  9, 11,  8, 10, 11,   // top
 	};
 
 	glGenVertexArrays(1, &VAO8);
@@ -895,18 +1208,367 @@ void Demo::BuildPapanTulisBorderHorizontal() {
 
 }
 
-void Demo::DrawPapanTulisBorderKiri()
+void Demo::DrawPintuBingkai()
 {
 	glUseProgram(shaderProgram);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture7);
+	glBindTexture(GL_TEXTURE_2D, texture8);
 	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
 
-	glBindVertexArray(VAO7); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+	glBindVertexArray(VAO8); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(-2.5, 1, 0));
+	model = glm::translate(model, glm::vec3(8.5, 0, 25));
+
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3)); */
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildDindingC() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture9);
+	glBindTexture(GL_TEXTURE_2D, texture9);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("dindingC.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		// dinding b
+		-14.5, 0, 0, 0, 0,  // 0
+		 14.5, 0, 0, 1, 0,  // 1
+		-14.5, 5, 0, 0, 1,  // 2
+		 14.5, 5, 0, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO9);
+	glGenBuffers(1, &VBO9);
+	glGenBuffers(1, &EBO9);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO9);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO9);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO9);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawDindingKiri()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture9);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO9); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8.5, 0, 15.5));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildLukisanBDepan() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture10);
+	glBindTexture(GL_TEXTURE_2D, texture10);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("lukisanBDepan.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		-1, 0, 0.2, 0, 0,  // 0
+		 1, 0, 0.2, 1, 0,  // 1
+		-1, 3, 0.2, 0, 1,  // 2
+		 1, 3, 0.2, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		0,  1,  3,  0,  2,  3,   // bottom
+	};
+
+	glGenVertexArrays(1, &VAO10);
+	glGenBuffers(1, &VBO10);
+	glGenBuffers(1, &EBO10);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO10);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO10);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO10);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawLukisanBDepan()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture10);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO10); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8.5, 1, 16));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildLukisanCDepan() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture11);
+	glBindTexture(GL_TEXTURE_2D, texture11);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("lukisanCDepan.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		-1, 0, 0.2, 0, 0,  // 0
+		 1, 0, 0.2, 1, 0,  // 1
+		-1, 3, 0.2, 0, 1,  // 2
+		 1, 3, 0.2, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		0,  1,  3,  0,  2,  3,   // bottom
+	};
+
+	glGenVertexArrays(1, &VAO11);
+	glGenBuffers(1, &VBO11);
+	glGenBuffers(1, &EBO11);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO11);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO11);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO11);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawLukisanCDepan()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture11);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO10); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(-8.5, 1, 24));
+
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildLantai() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture12);
+	glBindTexture(GL_TEXTURE_2D, texture12);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("lantai.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		 8.5, 0,  0, 0, 0,  // 0
+		-8.5, 0,  0, 1, 0,  // 1
+		 8.5, 0, 31, 0, 1,  // 2
+		-8.5, 0, 31, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO12);
+	glGenBuffers(1, &VBO12);
+	glGenBuffers(1, &EBO12);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO12);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO12);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO12);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawLantai()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture12);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO12); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	//model = glm::translate(model, glm::vec3(-6.5, 0, 0));
 
 	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
 
@@ -921,22 +1583,84 @@ void Demo::DrawPapanTulisBorderKiri()
 	glBindVertexArray(0);
 }
 
-void Demo::DrawPapanTulisBorderKanan()
+void Demo::BuildDindingKananA() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture13);
+	glBindTexture(GL_TEXTURE_2D, texture13);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("dindingC.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		// dinding b
+		-11.5, 0, 0, 0, 0,  // 0
+		 11.5, 0, 0, 1, 0,  // 1
+		-11.5, 5, 0, 0, 1,  // 2
+		 11.5, 5, 0, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO13);
+	glGenBuffers(1, &VBO13);
+	glGenBuffers(1, &EBO13);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO13);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO13);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO13);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawDindingKananA()
 {
 	glUseProgram(shaderProgram);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture7);
+	glBindTexture(GL_TEXTURE_2D, texture13);
 	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
 
-	glBindVertexArray(VAO7); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+	glBindVertexArray(VAO13); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(2.5, 1, 0));
+	model = glm::translate(model, glm::vec3(8.5, 0, 12.5));
 
-	/*model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
 
-	model = glm::scale(model, glm::vec3(3, 3, 3));*/
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -947,22 +1671,84 @@ void Demo::DrawPapanTulisBorderKanan()
 	glBindVertexArray(0);
 }
 
-void Demo::DrawPapanTulisBorderAtas()
+void Demo::BuildDindingKananB() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture14);
+	glBindTexture(GL_TEXTURE_2D, texture14);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("dindingC.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		// dinding b
+		-1, 4, 0, 0, 0,  // 0
+		 1, 4, 0, 1, 0,  // 1
+		-1, 5, 0, 0, 1,  // 2
+		 1, 5, 0, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO14);
+	glGenBuffers(1, &VBO14);
+	glGenBuffers(1, &EBO14);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO14);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO14);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO14);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawDindingKananB()
 {
 	glUseProgram(shaderProgram);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture8);
+	glBindTexture(GL_TEXTURE_2D, texture14);
 	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
 
-	glBindVertexArray(VAO8); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+	glBindVertexArray(VAO14); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(0, 4, 0));
+	model = glm::translate(model, glm::vec3(8.5, 0, 25));
 
-	//model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
 
-	//model = glm::scale(model, glm::vec3(3, 3, 3));
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -973,22 +1759,171 @@ void Demo::DrawPapanTulisBorderAtas()
 	glBindVertexArray(0);
 }
 
-void Demo::DrawPapanTulisBorderBawah()
+void Demo::BuildDindingKananC() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture15);
+	glBindTexture(GL_TEXTURE_2D, texture15);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("dindingC.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		// dinding b
+		-2, 0, 0, 0, 0,  // 0
+		 2, 0, 0, 1, 0,  // 1
+		-2, 5, 0, 0, 1,  // 2
+		 2, 5, 0, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO15);
+	glGenBuffers(1, &VBO15);
+	glGenBuffers(1, &EBO15);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO15);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO15);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO15);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawDindingKananC()
 {
 	glUseProgram(shaderProgram);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture8);
+	glBindTexture(GL_TEXTURE_2D, texture15);
 	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
 
-	glBindVertexArray(VAO8); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+	glBindVertexArray(VAO15); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
 	glm::mat4 model;
-	model = glm::translate(model, glm::vec3(0, 1, 0));
+	model = glm::translate(model, glm::vec3(8.5, 0, 28));
 
-	//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0, 0, 1));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
 
-	//model = glm::scale(model, glm::vec3(3, 3, 3));
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+}
+
+void Demo::BuildPintu() {
+	// load image into texture memory
+	// ------------------------------
+	// Load and create a texture 
+	glGenTextures(1, &texture16);
+	glBindTexture(GL_TEXTURE_2D, texture16);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	int width, height;
+	unsigned char* image = SOIL_load_image("pintu.png", &width, &height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// set up vertex data (and buffer(s)) and configure vertex attributes
+	// ------------------------------------------------------------------
+	float vertices[] = {
+		// format position, tex coords
+		 1, 0, 0.1, 0, 0,  // 0
+		-1, 0, 0.1, 1, 0,  // 1
+		 1, 4, 0.1, 0, 1,  // 2
+		-1, 4, 0.1, 1, 1,  // 3
+
+	};
+
+	unsigned int indices[] = {
+		 0,  1,  3,  0,  2,  3,   // left
+	};
+
+	glGenVertexArrays(1, &VAO16);
+	glGenBuffers(1, &VBO16);
+	glGenBuffers(1, &EBO16);
+	// bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+	glBindVertexArray(VAO16);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO16);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO16);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// define position pointer layout 0
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(0 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(0);
+
+	// define texcoord pointer layout 1
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
+	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+	glBindVertexArray(0);
+
+	// remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+}
+
+void Demo::DrawPintu()
+{
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture16);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO16); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(8.5, 0, 25));
+
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0, 1, 0));
+
+	/*model = glm::scale(model, glm::vec3(3, 3, 3));*/
 
 	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -1058,5 +1993,5 @@ void Demo::RotateCamera(float speed)
 
 int main(int argc, char** argv) {
 	RenderEngine& app = Demo();
-	app.Start("Final Project PE Club", 800, 600, false, false);
+	app.Start("Final Project PE Club", 1366, 768, false, false);
 }
