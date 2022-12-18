@@ -144,6 +144,10 @@
     <None Include="fragmentShader.frag" />
     <None Include="vertexShader.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="saklarBorder.png" />
+    <Image Include="saklarDepan.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
